@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Gmail Viewer</title>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js"></script>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+header{
+    background:#d93025;
+    color:white;
+    padding:15px;
+    font-size:24px;
+}
+
+button{
+    margin:20px;
+    padding:10px 20px;
+    font-size:16px;
+}
+
+.mail{
+    background:white;
+    margin:10px 20px;
+    padding:15px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>📧 Gmail Viewer</header>
+
+<button id="login">Googleでログイン</button>
+
+<div id="mails"></div>
+
+<script>
+const CLIENT_ID = "318247976957-an3qcrmiqou86tlobbkfq6trhmtl6h4r.apps.googleusercontent.com";
+
+document.getElementById("login").onclick = () => {
+    alert("ここからGoogle認証を追加します。");
+};
+</script>
+
+</body>
+</html>
