@@ -1,58 +1,68 @@
-let tokenClient;
-let accessToken = null;
+let tokenClient = null;
+let gapiReady = false;
+let gisReady = false;
 
-async function initGoogleAuth() {
+function gapiLoaded() {
+    gapi.load("client", initializeGapiClient);
+}
 
-    await new Promise(resolve => {
-        gapi.load("client", resolve);
-    });
-
+async function initializeGapiClient() {
     await gapi.client.init({
         apiKey: API_KEY,
         discoveryDocs: [DISCOVERY_DOC]
     });
 
+    gapiReady = true;
+    maybeEnableButton();
+}
+
+function gisLoaded() {
     tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: SCOPES,
-        callback: async (response) => {
+        callback: async (tokenResponse) => {
 
-            if (response.error) {
-                console.error(response);
-                alert("ログインに失敗しました。");
+            if (tokenResponse.error) {
+                console.error(tokenResponse);
+                alert("Google認証に失敗しました。");
                 return;
             }
-
-            accessToken = response.access_token;
 
             document.getElementById("loginBtn").textContent =
                 "ログイン済み";
 
-            if (typeof loadInbox === "function") {
-                loadInbox();
-            }
-
+            await loadInbox();
         }
     });
 
+    gisReady = true;
+    maybeEnableButton();
 }
 
-window.addEventListener("load", async () => {
+function maybeEnableButton() {
 
-    try{
-        await initGoogleAuth();
-    }
-    catch(e){
-        console.error(e);
-        alert("Google APIの初期化に失敗しました");
+    if (gapiReady && gisReady) {
+
+        document.getElementById("loginBtn").disabled = false;
+
     }
 
-});
+}
 
-document.getElementById("loginBtn").addEventListener("click", () => {
+window.onload = () => {
+
+    document.getElementById("loginBtn").disabled = true;
+
+    gapiLoaded();
+
+    gisLoaded();
+
+};
+
+document.getElementById("loginBtn").onclick = () => {
 
     tokenClient.requestAccessToken({
-        prompt:"consent"
+        prompt: "consent"
     });
 
-});
+};
