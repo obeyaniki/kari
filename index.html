@@ -2,56 +2,112 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gmail Viewer</title>
+
+<link rel="stylesheet" href="style.css">
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/api.js"></script>
-
-<style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f2f2f2;
-    margin:0;
-}
-
-header{
-    background:#d93025;
-    color:white;
-    padding:15px;
-    font-size:24px;
-}
-
-button{
-    margin:20px;
-    padding:10px 20px;
-    font-size:16px;
-}
-
-.mail{
-    background:white;
-    margin:10px 20px;
-    padding:15px;
-    border-radius:10px;
-}
-</style>
 </head>
 
 <body>
 
-<header>📧 Gmail Viewer</header>
+<header class="topbar">
+    <div class="logo">
+        📧 Gmail Viewer
+    </div>
 
-<button id="login">Googleでログイン</button>
+    <div class="search">
+        <input
+            type="text"
+            id="searchBox"
+            placeholder="メールを検索">
+    </div>
 
-<div id="mails"></div>
+    <div class="account">
+        <button id="loginBtn">
+            Googleでログイン
+        </button>
+    </div>
+</header>
 
-<script>
-const CLIENT_ID = "318247976957-an3qcrmiqou86tlobbkfq6trhmtl6h4r.apps.googleusercontent.com";
-const API_KEY = "AIzaSyD9u62NE-qXUzPMzsyQH9LjwNQ1AKSvEn4";
+<div class="container">
 
-document.getElementById("login").onclick = () => {
-    alert("ここからGoogle認証を追加します。");
-};
-</script>
+    <aside class="sidebar">
+
+        <button class="menu active" data-folder="INBOX">
+            📥 受信箱
+        </button>
+
+        <button class="menu" data-folder="STARRED">
+            ⭐ スター
+        </button>
+
+        <button class="menu" data-folder="SENT">
+            📤 送信済み
+        </button>
+
+        <button class="menu" data-folder="DRAFT">
+            📝 下書き
+        </button>
+
+        <button class="menu" data-folder="SPAM">
+            🚫 スパム
+        </button>
+
+        <button class="menu" data-folder="TRASH">
+            🗑 ゴミ箱
+        </button>
+
+    </aside>
+
+    <main class="mailArea">
+
+        <div id="mailList">
+
+            <div class="welcome">
+
+                <h2>Gmail Viewer</h2>
+
+                <p>
+                    Googleでログインすると
+                    メール一覧が表示されます。
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <section class="viewer">
+
+        <div id="mailContent">
+
+            <h2>メール本文</h2>
+
+            <p>
+                左のメールをクリックすると
+                本文が表示されます。
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+
+    Gmail Viewer v1.0
+
+</footer>
+
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="gmail.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
